@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;700&display=swap');
+
+* {
+  font-family: 'Mukta', sans-serif;
+  margin: 0;
+  padding: 0;
+  font-weight: 400;
+  font-size: 14px;
+}
+#firstTitle {
+  padding-top: 20px;
+  margin-top: 2%;
+}
+
+#container {
+  max-width: 80%;
+  width: 940px;
+  height: 80%;
+  padding: 0 10px;
+  margin: 0 auto;
+  text-align: center;
+  background-color: thistle;
+  border-radius: 10px;
+  box-sizing: content-box;
+}
+
+#inputSearch {
+  margin: 10px;
+  width: 80%;
+  border: 0;
+  border-bottom: 1px solid gray;
+  font-size: 1rem;
+  padding: 4px 0;
+  background: transparent;
+}
+
+#searchButton {
+  outline: none;
+  padding: 5px 10px;
+  background-color: rgb(152, 28, 168);
+  color: white;
+  cursor: pointer;
+}
+
+#searchButton:disabled {
+  background-color: gray;
+}
+
+#searchButton:disabled:hover {
+  background-color: gray;
+}
+
+#searchButton:hover {
+  background-color: rgb(81, 10, 90);
+}
+
+#details {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 5px;
+  width: 80%;
+  margin: 0 auto;
+}
+
+#countUsers,
+#countData {
+  font-size: 1.8rem;
+}
+
+.details,
+#countData {
+  text-align: left;
+}
+
+img {
+  border-radius: 50%;
+  width: 15%;
+  padding: 10px;
+}
+
+.usersEach {
+  display: flex;
+  align-items: center;
+}

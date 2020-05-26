@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <link rel="stylesheet" href="./css/style.css" />
+    <title>Filtrar usuários e mostrar estatísticas</title>
+  </head>
+  <body>
+    <div id="container">
+      <h1 id="firstTitle">Pesquisa de usuários</h1>
+
+      <h4 id="loading"></h4>
+
+      <span>
+        <input
+          type="text"
+          name="inputSearch"
+          id="inputSearch"
+          placeholder="Digitar nome para buscar"
+        />
+        <input type="button" value="Buscar" id="searchButton" disabled />
+      </span>
+
+      <div id="details">
+        <div id="countUsers">Nenhum usuário filtrado</div>
+        <div id="countData">Nada a ser exibido</div>
+      </div>
+
+      <div id="details">
+        <div id="usersList" class="details"></div>
+        <div id="statisticalData" class="details">
+          <p id="male"></p>
+          <p id="female"></p>
+          <p id="ageSum"></p>
+          <p id="ageAverage"></p>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="./js/script.js"></script>
+  </body>
+</html>
