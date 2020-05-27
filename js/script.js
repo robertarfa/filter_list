@@ -1,6 +1,6 @@
 let allUsers = []
 let filterUser = ''
-let filteredUsers = []
+let foundUsers = []
 
 // loading()
 
@@ -18,12 +18,9 @@ window.addEventListener('load', () => {
   countUsers = document.querySelector('#countUsers')
   countData = document.querySelector('#countData')
 
-  countMale = document.querySelector('#male')
-  countFemale = document.querySelector('#female')
-  ageSum = document.querySelector('#ageSum')
-  ageAverage = document.querySelector('#ageAverage')
-
+  dataDetails = document.querySelector('.dataDetails')
   fetchData()
+  inputSearch.focus()
 })
 
 async function fetchData() {
@@ -40,18 +37,18 @@ async function fetchData() {
       gender,
     }
   })
-  render()
+  filterNames()
+  activateSearchButton()
+}
+
+function activateSearchButton() {
+  document.querySelector('#searchButton').disabled = false
 }
 
 function render() {
   renderUsersList()
-  renderSummary()
-  genderFilter()
-  sumAges()
-  averageAges()
-  activateSearchButton()
-  filterNames()
-  searchUsersByFilter()
+  details()
+  renderFoundUsers()
 }
 
 function renderUsersList(filteredUsers) {
@@ -61,12 +58,12 @@ function renderUsersList(filteredUsers) {
     const { name, picture, age } = user
 
     const userHTML = `
-        <div>
-            <div class='usersEach'>
+        
+            <p class='usersEach'>
             <img src='${picture}'>
             ${name}, ${age} anos
-            </div>
-        </div>
+            </p>
+        
         `
 
     usersHTML += userHTML
@@ -76,11 +73,33 @@ function renderUsersList(filteredUsers) {
   usersList.innerHTML = usersHTML
 }
 
+function renderFoundUsers() {
+  countUsers.innerHTML = `${foundUsers.length} usuário(s) encontrado(s)`
+  countData.innerHTML = 'Estatísticas'
+
+  let foundHTML = `<div>`
+  foundUsers.forEach((user) => {
+    const { name, age, picture } = user
+    const userHTML = `
+        <p class='usersEach'>
+          <img src='${picture}' alt='${name}'>
+          <span class='align'>${name}, ${age} anos</span>
+        </p>
+      `
+
+    foundHTML += userHTML
+  })
+
+  foundHTML += '</div>'
+  usersList.innerHTML = foundHTML
+}
+
 function filterNames() {
   const buttonSearch = document.querySelector('#searchButton')
   const inputSearch = document.querySelector('#inputSearch')
 
   inputSearch.addEventListener('keyup', (evt) => {
+    filterUser = inputSearch.value
     if (evt.keyCode === 13 && filterUser.length > 0) {
       searchUsersByFilter()
     }
@@ -92,49 +111,41 @@ function filterNames() {
 }
 
 function searchUsersByFilter() {
-  const filteredUsers = allUsers.filter((user) =>
+  foundUsers = allUsers.filter((user) =>
     user.name.toLowerCase().includes(filterUser.toLowerCase())
   )
-  renderSummary()
+  filterUser = inputSearch.value
+
+  render()
 }
 
-function renderSummary() {
-  countUsers.innerHTML = allUsers.length + ' usuário(s) encontrado(s)'
-  countData.innerHTML = 'Estatísticas'
-}
-
-function genderFilter() {
-  const female = allUsers.filter((user) => {
+function details() {
+  const female = foundUsers.filter((user) => {
     const { gender } = user
     return gender == 'female'
   })
-
-  const male = allUsers.filter((user) => {
+  const male = foundUsers.filter((user) => {
     const { gender } = user
     return gender == 'male'
   })
 
-  countMale.innerHTML = `Sexo masculino: ${male.length}`
-  countFemale.innerHTML = `Sexo feminino: ${female.length}`
-}
-
-function sumAges() {
-  const totalAges = allUsers.reduce((acc, curr) => {
+  const totalAges = foundUsers.reduce((acc, curr) => {
     return acc + curr.age
   }, 0)
-
-  ageSum.innerHTML = `Soma das idades: ${totalAges}`
-}
-
-function averageAges() {
-  const averageAges = allUsers.reduce((acc, curr, _, { length }) => {
+  const averageAges = foundUsers.reduce((acc, curr, _, { length }) => {
     return acc + curr.age / length
   }, 0)
 
-  ageAverage.innerHTML = `Média das idades: ${averageAges.toFixed(2)}`
-}
+  let datasHTML = '<div>'
 
-function activateSearchButton() {
-  document.querySelector('#searchButton').disabled = false
-  inputSearch.focus()
+  const dataHTML = `
+  <p class='parag'> Sexo masculino: ${male.length}</p>
+  <p class='parag'>Sexo feminino: ${female.length}</p>
+  <p class='parag'>Soma das idades: ${totalAges}</p>
+  <p class='parag'>Média das idades: ${averageAges.toFixed(2)}</p>
+`
+  datasHTML += dataHTML
+  datasHTML += '</div>'
+
+  dataDetails.innerHTML = datasHTML
 }
